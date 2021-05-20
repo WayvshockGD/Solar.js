@@ -1,0 +1,31 @@
+{
+  "name": "solar",
+  "version": "1.0.0",
+  "description": "A discord library built for node.js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WayvshockGD/Solar.js.git"
+  },
+  "keywords": [
+    "discord",
+    "api",
+    "solar.js"
+  ],
+  "author": "WayvshockGD",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/WayvshockGD/Solar.js/issues"
+  },
+  "homepage": "https://github.com/WayvshockGD/Solar.js#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "eventemitter3": "^4.0.7"
+  },
+  "devDependencies": {
+    "@types/ws": "^7.4.4"
+  }
+}
