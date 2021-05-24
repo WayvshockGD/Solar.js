@@ -1,4 +1,4 @@
-Solar.js is a discord api library for use with node.js
+## Solar.js is a discord api library for use with node.js
 
 # Status
 ```
