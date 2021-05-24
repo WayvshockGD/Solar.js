@@ -1,4 +1,5 @@
-![image](https://user-images.githubusercontent.com/61085765/119387502-0848bb80-bc97-11eb-82c8-92c07781f378.png)
+![image](https://user-images.githubusercontent.com/61085765/119387687-47770c80-bc97-11eb-9685-14d78d51be88.png)
+
 
 ## Solar.js is a discord api library for use with node.js
 
