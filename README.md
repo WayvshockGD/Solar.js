@@ -11,9 +11,11 @@ Requester: 🔴
 
 Once the library is complete i will publish it to npm.
 
+# Example if you want
+
 # What will the library do
-Well giving that its gonna be like discord.js and eris together its maybe gonna be mostly 
-promise based, rest, collector, 
+Well giving that its gonna be like discord.js and eris together its maybe gonna be mostly\n
+promise based, rest, collector,\n
 and with a [Message Embed Class](https://github.com/WayvshockGD/Solar.js/blob/main/lib/utils/Embed.js)
 
 # Support
