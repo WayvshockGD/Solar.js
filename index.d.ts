@@ -19,6 +19,10 @@ declare namespace Solar {
         setDescription(desc: string): this;
         setColor(color: Colors): this;
     };
+    
+    class Client {
+        startGateway(token?: string): void;
+    }
 }
 
 export = Solar;
