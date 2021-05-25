@@ -15,8 +15,7 @@ Once the library is complete i will publish it to npm.
 
 # What will the library do
 Well giving that its gonna be like discord.js and eris together its maybe gonna be mostly  
-promise based, rest, collector,  
-and with a [Message Embed Class](https://github.com/WayvshockGD/Solar.js/blob/main/lib/utils/Embed.js)  
+promise based, rest, collector, and with a [Message Embed Class](https://github.com/WayvshockGD/Solar.js/blob/main/lib/utils/Embed.js)  
 
 # Support
 join the support server https://discord.gg/KtQHZWh8
