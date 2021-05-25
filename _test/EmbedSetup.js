@@ -1,9 +1,13 @@
-let { EmbedBuilder } = require("../index");
+let { EmbedBuilder, Client } = require("../index");
+
+let client = new Client({}, "<token>");
 
 let embed = new EmbedBuilder()
-            .setTitle("t")
-            .setDescription("h")
-            .setColor("")
+            .setTitle("title-here")
+            .setDescription("description-here")
+            .setColor("lightBlue")
             .setFields([
-                  {name: "test", value: "words-here", inline: true}
+                  {name: "title-here", value: "message-here", inline: true}
              ])
+
+client.startGateway();
