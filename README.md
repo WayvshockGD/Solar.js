@@ -12,6 +12,13 @@ Requester: 🔴
 Once the library is complete i will publish it to npm.
 
 # Example if you want
+```js
+let { Client } = require("solar.js");
+
+let client = new Client({options}, "token") // Token doesn't have to be here.
+
+client.startGateway("token") // Starting the bot gateway and using the token here.
+```
 
 # What will the library do
 Well giving that its gonna be like discord.js and eris together its maybe gonna be mostly  
