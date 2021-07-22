@@ -33,6 +33,10 @@ export = class Client extends EventEmitter {
     }
 
     async sendMessage(channel: string, content: MessageOptions | string) {
+        // @ts-ignore
+        if (content.embeds && !content.embeds.length) {
+            throw new Error("Invalid embeds size.");
+        }
         let messageContent = typeof content === "object" ? content : { content };
         
         await this.requester.request<GatewayMessageCreateDispatch>(messages(channel), {

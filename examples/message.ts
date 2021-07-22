@@ -7,12 +7,15 @@ let client = new Client({
 });
 
 client.on("messageEvent", (message: Message) => {
-    if (message.content === ">h") {
-        message.sendMessage("");
+    if (message.content === ">message") {
+        message.sendMessage("Hi this is from the message structure :D");
+    } else if (message.content === ">channel") {
+        message.channel.sendMessage("Hi this is from the channel structure ;D")
+    } else if (message.content === ">client") {
+        client.sendMessage(message.channel.id, "Saying hi from the client!");
     }
 });
 
-client.startGateway()
-client.on("ready", () => { 
-    console.log("Ready!")
-});
+client.startGateway();
+
+client.on("ready", () => { console.log("Ready!"); });

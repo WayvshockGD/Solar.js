@@ -2,11 +2,11 @@ import { GatewayMessageCreateDispatchData, APIUser } from "discord-api-types";
 import Client from "../Client";
 import { MessageOptions } from "../types/Context";
 import Base from "./Base";
-import Channel from "./Channel";
+import { Channel } from "./Channel";
 
 export = class Message extends Base {
     client: Client;
-    data: GatewayMessageCreateDispatchData;
+    private data: GatewayMessageCreateDispatchData;
 
     id: string;
     author: APIUser;
@@ -21,7 +21,7 @@ export = class Message extends Base {
         this.author = data.author;
         this.id = data.id;
 
-        this.channel = new Channel();
+        this.channel = new Channel({ id: data.channel_id, message: this }, client);
     }
 
     get content() {
