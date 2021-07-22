@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/WayvshockGD/Solar.js#readme",
   "dependencies": {
+    "erlpack": "^0.1.3",
     "events": "^3.3.0",
     "got": "^11.8.2",
     "ws": "^7.5.3"

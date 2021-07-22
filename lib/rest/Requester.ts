@@ -1,26 +1,42 @@
-import got from "got/dist/source";
+import got, { OptionsOfTextResponseBody } from "got/dist/source";
 import Client from "../Client";
-import { githubURL } from "../Constants";
-import { version } from "../../package.json";
+import { agent } from "../Constants";
 import { IRestOptions } from "../types/Context";
 
-export = class Requester {
+class Requester {
     private _client: Client;
     constructor(client: Client) {
 
         this._client = client;
     }
 
-    async request(url: string, options: IRestOptions, body: object) {
+    async request(url: string, options: IRestOptions, body?: any) {
 
         let auth = (typeof options.auth === "undefined") ? "" : `Bot ${this._client.options.token}`;
-        let agent = `Solarjs (${githubURL}, ${version})`
 
-        let res = await got(url, {
-            form: body,
-            headers: {
-                Authorization: auth
-            }
-        });
+        let gotOptions: OptionsOfTextResponseBody =  {  
+             headers: {
+                "content-type": "application/json",
+                "User-Agent": agent,
+                "Authorization": auth,
+                "Accept-Encoding": "gzip,deflate",
+                "X-RateLimit-Precision": "millisecond"
+            },
+            method: options.method,
+        }
+
+        if (body) {
+            gotOptions.json = body;
+        }
+
+        let res = await got(url, { ...gotOptions });
+
+        if (res.statusCode === 429) {
+            return this._client.emit("ratelimit");
+        }
+
+        return res;
     }
 }
+
+export = Requester;
