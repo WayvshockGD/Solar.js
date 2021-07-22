@@ -1,7 +1,8 @@
+import { GatewayDispatchPayload } from "discord-api-types";
 import EventEmitter from "events";
+import { Identifier } from "typescript";
 import WebSocket, { Data } from "ws";
 import Client from "../Client";
-import { agent } from "../Constants";
 import WebSocketHandler from "../rest/handlers/WebsocketHandler";
 
 export = class Shard extends EventEmitter {
@@ -23,22 +24,22 @@ export = class Shard extends EventEmitter {
     }
 
     public identify() {
+        let dent = this._client.options.identify;
+
         let indent = {
             op: 2,
             d: {
                 token: this._client.options.token,
-                intents: [
-                    1 << 0
-                ],
+                intents: this._client.options.intents,
                 properties: {
-                    $os: process.platform,
-                    $browser: 'Solarjs',
-                    $device: 'Solarjs',
+                    "$os": process.platform,
+                    "$browser": dent?.properties?.$browser || "Solarjs",
+                    "$device": dent?.properties?.$device || "Solarjs"
                 },
                 compress: false,
                 large_threshold: 250,
                 presence: {
-                    status: 'online',
+                    status: dent?.presence?.status || "online",
                     afk: false,
                 }
             }
@@ -53,9 +54,23 @@ export = class Shard extends EventEmitter {
         this.ws.send(JSON.stringify({ ...indent }));
     }
 
+    public status(indentifier: Identifier, game: string) {
+        this._client.guilds.forEach((guild) => {
+            if (guild) {
+                
+            }
+        })
+    }
+
     startWsEvents() {
         this.ws.on("message", (dData) => {
             this.webSocketHandler<Data>(dData).messageInit();
+
+            let data: GatewayDispatchPayload = (typeof dData === "object") 
+                      ? dData 
+                      : JSON.parse(dData);
+                      
+            WebSocketHandler.onEvent(data, this._client);
         });
 
         this.ws.on("open", () => {

@@ -1,11 +1,26 @@
 import { Method } from "got/dist/source";
+import { Identifiers } from "./Types";
+import { ISettingsParam } from "tslog";
 
 export interface IOptions {
     token: string;
-    logger?: { debug?: boolean };
+    logger?: { 
+        debug?: boolean,
+        loggerOptions?: ISettingsParam;
+    };
+    intents?: number;
     ws?: {};
     shards?: {
         max?: number;
+    }
+    identify?: {
+        properties?: {
+            $browser?: string;
+            $device?: string;
+        }
+        presence?: {
+            status?: Identifiers;
+        }
     }
 }
 
@@ -24,6 +39,7 @@ export interface embedOptions {
 
 export interface MessageOptions {
     embeds?: embedOptions[];
+    content?: string;
 }
 
 export interface IRestOptions {

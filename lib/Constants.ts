@@ -12,8 +12,13 @@ let botGateway = `${baseLink}/gateway/bot`;
 
 let agent = `Solarjs (${githubURL}, ${pkg.version})`;
 
+let DEFAULT_INTENTS = 770;
+
 
 let channel = (channelID: string) => `${baseLink}/channels/${channelID}`;
 let messages = (channelID: string) => `${channel(channelID)}/messages`;
 
-export { channel, messages, githubURL, baseLink, apiVersion, botGateway, agent, wsUrl };
+export { 
+    channel, messages, githubURL, baseLink, apiVersion,
+     botGateway, agent, wsUrl, DEFAULT_INTENTS 
+};

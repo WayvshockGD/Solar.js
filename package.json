@@ -27,6 +27,8 @@
     "erlpack": "^0.1.3",
     "events": "^3.3.0",
     "got": "^11.8.2",
+    "ts-node": "^10.1.0",
+    "tslog": "^3.2.0",
     "ws": "^7.5.3"
   },
   "devDependencies": {

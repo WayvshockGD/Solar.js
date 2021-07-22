@@ -1,0 +1,1 @@
+export type Identifiers = "online" | "idle" | "dnd";
