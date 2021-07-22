@@ -10,7 +10,7 @@ class Requester {
         this._client = client;
     }
 
-    async request(url: string, options: IRestOptions, body?: any) {
+    async request<Data>(url: string, options: IRestOptions, body?: any) {
 
         let auth = (typeof options.auth === "undefined") ? "" : `Bot ${this._client.options.token}`;
 
@@ -32,10 +32,14 @@ class Requester {
         let res = await got(url, { ...gotOptions });
 
         if (res.statusCode === 429) {
-            return this._client.emit("ratelimit");
+            this._client.emit("ratelimit");
+            return;
         }
 
-        return res;
+        // @ts-ignore
+        let resBody: Data = res;
+        
+        return resBody;
     }
 }
 

@@ -1,9 +1,11 @@
 import EventEmitter from "events";
-import { apiVersion, botGateway, messages } from "./Constants";
+import { apiVersion, botGateway, messages, wsUrl } from "./Constants";
 import ShardManager from "./managers/ShardManager";
 import Requester from "./rest/Requester";
 import Erlpack from "erlpack";
-import { events, IOptions, MessageOptions } from "./types/Context";
+import { IOptions, MessageOptions } from "./types/Context";
+
+import type { GatewayMessageCreateDispatch } from "discord-api-types/v9";
 
 export = class Client extends EventEmitter {
     options: IOptions;
@@ -20,21 +22,15 @@ export = class Client extends EventEmitter {
     }
 
     async sendMessage(channel: string, content: MessageOptions | string) {
-        await this.requester.request(messages(channel), {
+        await this.requester.request<GatewayMessageCreateDispatch>(messages(channel), {
             method: "POST", 
             auth: true
         }, content);
     }
 
-    private getGateway() {
-        return this.requester.request(botGateway, { method: "GET", auth: true });
-    }
-
     async startGateway() {
-        let data = await this.getGateway();
 
-        // @ts-ignore
-        this.url = `${data.url}?v=${apiVersion}&encoding=${Erlpack ? "etf" : "json"}`;
+        this.url = `${wsUrl}/?v=${apiVersion}&encoding=${Erlpack ? "etf" : "json"}/`;
 
         for (let shard of [0]) {
             this.shards.spawnShard(shard);

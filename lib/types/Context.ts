@@ -3,6 +3,10 @@ import { Method } from "got/dist/source";
 export interface IOptions {
     token: string;
     logger?: { debug?: boolean };
+    ws?: {};
+    shards?: {
+        max?: number;
+    }
 }
 
 export interface fields {
