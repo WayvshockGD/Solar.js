@@ -6,7 +6,9 @@
 # Status
 ```
 Core: 🔴
-Requester: 🔴
+Client: 🔴
+Rest: ⭕
+Requester: 🔵
 ```
 
 Once the library is complete i will publish it to npm.
