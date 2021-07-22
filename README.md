@@ -17,14 +17,22 @@ Once the library is complete i will publish it to npm.
 ```js
 let { Client } = require("solar.js");
 
-let client = new Client({options}, "token") // Token doesn't have to be here.
+let client = new Client({
+    "token": "client-token",
+    // other options 
+});
 
-client.startGateway("token") // Starting the bot gateway and using the token here.
+client.on("messageEvent", (message) => {
+return message.channel.sendMessage({
+       embeds: [{ title: "Hi I am a embed!" }]
+    })
+})
+
+client.startGateway("token") // Starting the bot gateway and it's shards.
 ```
 
 # What will the library do
-Well giving that its gonna be like discord.js and eris together its maybe gonna be mostly  
-promise based, rest, collector, and with a [Message Embed Class](https://github.com/WayvshockGD/Solar.js/blob/main/lib/utils/Embed.js)  
+Well giving that its gonna be like discord.js and eris together.  
 
 # Support
 join the support server https://discord.gg/KtQHZWh8
