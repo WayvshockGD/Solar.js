@@ -28,7 +28,7 @@ return message.channel.sendMessage({
     })
 })
 
-client.startGateway("token") // Starting the bot gateway and it's shards.
+client.startGateway() // Starting the bot gateway and it's shards.
 ```
 
 # What will the library do
