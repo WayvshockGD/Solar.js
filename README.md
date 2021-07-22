@@ -28,6 +28,10 @@ return message.channel.sendMessage({
     })
 });
 
+client.on("ready", () => {
+       client.logger.info("Ready");
+});
+
 client.startGateway(); // Starting the bot gateway and it's shards.
 ```
 
