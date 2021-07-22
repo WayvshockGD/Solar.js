@@ -26,9 +26,9 @@ client.on("messageEvent", (message) => {
 return message.channel.sendMessage({
        embeds: [{ title: "Hi I am a embed!" }]
     })
-})
+});
 
-client.startGateway() // Starting the bot gateway and it's shards.
+client.startGateway(); // Starting the bot gateway and it's shards.
 ```
 
 # What will the library do
