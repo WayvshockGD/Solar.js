@@ -1,1 +1,1 @@
-require("./examples/message")
+require("./examples/embed");

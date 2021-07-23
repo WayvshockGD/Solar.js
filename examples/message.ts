@@ -1,5 +1,5 @@
-import Client from "../lib/Client";
 import { token } from "../config.test.json";
+import Client from "../lib/Client";
 import Message from "../lib/structures/Message";
 
 let client = new Client({

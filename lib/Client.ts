@@ -1,20 +1,29 @@
 import EventEmitter from "events";
-import { apiVersion, botGateway, DEFAULT_INTENTS, messages, wsUrl } from "./Constants";
+import { apiVersion, botGateway, DEFAULT_INTENTS, deleteMessage, messages, wsUrl } from "./Constants";
 import ShardManager from "./managers/ShardManager";
 import Requester from "./rest/Requester";
 import Erlpack from "erlpack";
 import { IOptions, MessageOptions } from "./types/Context";
 
-import type { GatewayMessageCreateDispatch, APIGuild, APIGuildMember } from "discord-api-types/v9";
+import type { 
+    APIGuild, 
+    APIGuildMember, 
+    Snowflake,
+    GatewayMessageCreateDispatch
+} from "discord-api-types/v9";
+
 import { Logger } from "tslog";
+import Message from "./structures/Message";
+import RestClient from "./rest/RestClient";
 
 export = class Client extends EventEmitter {
     options: IOptions;
     requester: Requester;
     shards: ShardManager;
     logger: Logger;
-    guilds: Map<string, APIGuild>;
+    guilds: Map<Snowflake | undefined, APIGuild | undefined>;
     members: Map<string | undefined, APIGuildMember>;
+    rest: RestClient;
 
     public url: string = "";
     constructor(options: IOptions) {
@@ -23,6 +32,7 @@ export = class Client extends EventEmitter {
         this.options = options;
         this.shards = new ShardManager(this);
         this.requester = new Requester(this);
+        this.rest = new RestClient(this);
         this.guilds = new Map();
         this.members = new Map();
         this.logger = new Logger(options.logger?.loggerOptions);
@@ -32,17 +42,25 @@ export = class Client extends EventEmitter {
         }
     }
 
-    async sendMessage(channel: string, content: MessageOptions | string) {
+    async sendMessage(channel: string, content: MessageOptions | string): Promise<Message> {
         // @ts-ignore
         if (content.embeds && !content.embeds.length) {
             throw new Error("Invalid embeds size.");
         }
         let messageContent = typeof content === "object" ? content : { content };
         
-        await this.requester.request<GatewayMessageCreateDispatch>(messages(channel), {
+        return await this.requester.request<GatewayMessageCreateDispatch>(messages(channel), {
             method: "POST", 
             auth: true
-        }, messageContent);
+            // @ts-ignore
+        }, messageContent).then(data => new Message(data, this));
+    }
+
+    public deleteMessage(channelID: Snowflake, messageID: Snowflake) {
+        return this.requester.request(deleteMessage(channelID, messageID), {
+            auth: true,
+            method: "DELETE"
+        })
     }
 
     private getGateway() {

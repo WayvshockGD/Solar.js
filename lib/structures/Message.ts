@@ -28,6 +28,10 @@ export = class Message extends Base {
         return this.data.content;
     }
 
+    get mentions() {
+        return this.data.mentions;
+    }
+
     sendMessage(content: MessageOptions | string) {
         // @ts-ignore
         if (content.embeds && !content.embeds.length) {

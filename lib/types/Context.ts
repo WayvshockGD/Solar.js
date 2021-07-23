@@ -2,6 +2,13 @@ import { Method } from "got/dist/source";
 import { Identifiers } from "./Types";
 import { ISettingsParam } from "tslog";
 
+import type { APIButtonComponent, APIEmbedAuthor, APIEmbedFooter } from "discord-api-types";
+
+export interface activities {
+    name: string;
+    type: number;
+}
+
 export interface IOptions {
     token: string;
     logger?: { 
@@ -20,6 +27,7 @@ export interface IOptions {
         }
         presence?: {
             status?: Identifiers;
+            activities?: activities[];
         }
     }
 }
@@ -33,13 +41,15 @@ export interface fields {
 export interface embedOptions {
     title?: string;
     description?: string;
-    footer?: {};
+    footer?: APIEmbedFooter;
+    author?: APIEmbedAuthor;
     fields?: fields[];
 }
 
 export interface MessageOptions {
     embeds?: embedOptions[];
     content?: string;
+    components?: APIButtonComponent[];
 }
 
 export interface IRestOptions {

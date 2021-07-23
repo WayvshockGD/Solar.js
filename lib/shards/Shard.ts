@@ -39,6 +39,7 @@ export = class Shard extends EventEmitter {
                 compress: false,
                 large_threshold: 250,
                 presence: {
+                    activities: dent?.presence?.activities || [],
                     status: dent?.presence?.status || "online",
                     afk: false,
                 }
@@ -79,7 +80,7 @@ export = class Shard extends EventEmitter {
         })
 
         this.ws.on("close", (code, reason) => {
-            this.webSocketHandler({ reason, code }).onClose();
+            this.webSocketHandler({ reason, code }).onClose(this._client, this.identify);
         });
 
         this.ws.on("error", (err) => {

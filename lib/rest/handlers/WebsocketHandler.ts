@@ -5,10 +5,14 @@ import type { GatewayDispatchPayload } from "discord-api-types";
 import Client from "../../Client";
 import Message from "../../structures/Message";
 
+let sessionID = "";
+let seqNum = 0;
+
 export = class WebSocketHandler<D> {
     ws: WebSocket;
     recievedHeartbeat: boolean;
     data?: D;
+
     constructor(ws: WebSocket, data?: D) {
 
         this.ws = ws;
@@ -38,9 +42,26 @@ export = class WebSocketHandler<D> {
         console.log("Ready!");
     }
 
-    public onClose() {
+    public onClose(client: Client, indentify: () => void) {
+
         // @ts-ignore
-        console.log(typeof this.data === "object" ? this.data : JSON.parse(this.data));
+        let data = typeof this.data === "object" ? this.data : JSON.parse(this.data);
+        switch (data.code) {
+            case 1001:
+                this.ws.send({
+                    "op": 6,
+                    "d": {
+                        "token": client.options.token,
+                        "session_id": sessionID,
+                        "seq": seqNum
+                    }
+                });
+                indentify();
+                break;
+        
+            default:
+                break;
+        }
     }
 
     public onError() {
@@ -51,7 +72,7 @@ export = class WebSocketHandler<D> {
         console.log();
     }
 
-    public static onEvent(packet: GatewayDispatchPayload, client: Client) {
+    public static async onEvent(packet: GatewayDispatchPayload, client: Client) {
         switch (packet.op) {
             case 0:
                 switch (packet.t) {
@@ -64,13 +85,18 @@ export = class WebSocketHandler<D> {
                             return;
                         }
                         
-                        client.emit("messageEvent", new Message(packet.d, client))
+                        client.emit("messageEvent", new Message(packet.d, client));
                         break;
                     case "READY":
                         client.emit("ready");
+
+                        sessionID = packet.d.session_id;
+                        seqNum = packet.s;
                         break;
                     case "GUILD_CREATE":
                         if (!packet.d) return;
+                        if (client.guilds.has(packet.d.id)) return;
+
                         client.guilds.set(packet.d.id, packet.d);
 
                         if (!packet.d.members?.length) return;

@@ -1,24 +1,35 @@
 import pkg from "../package.json";
 
-let apiVersion: number = 9;
+let apiVersion = 9
 
-let baseLink: string = `https://discord.com/api/v${apiVersion}`;
+let baseLink = `https://discord.com/api/v${apiVersion}`
 
-let githubURL: string = "https://github.com/WayvshockGD/Solar.js";
+let githubURL = "https://github.com/WayvshockGD/Solar.js"
 
-let wsUrl = "wss://gateway.discord.gg";
+let wsUrl = "wss://gateway.discord.gg"
 
-let botGateway = `${baseLink}/gateway/bot`;
+let botGateway = `${baseLink}/gateway/bot`
 
-let agent = `Solarjs (${githubURL}, ${pkg.version})`;
+let agent = `Solarjs (${githubURL} ${pkg.version})`
 
-let DEFAULT_INTENTS = 770;
+let DEFAULT_INTENTS = 770
 
 
-let channel = (channelID: string) => `${baseLink}/channels/${channelID}`;
-let messages = (channelID: string) => `${channel(channelID)}/messages`;
+let channel = (channelID: string) => `${baseLink}/channels/${channelID}`
+let messages = (channelID: string) => `${channel(channelID)}/messages`
+let deleteMessage = (channelID: string, messageID: string) => `${messages(channelID)}/${messageID}`;
+let guild = (guildID: string) => `${baseLink}/guilds/${guildID}`;
 
-export { 
-    channel, messages, githubURL, baseLink, apiVersion,
-     botGateway, agent, wsUrl, DEFAULT_INTENTS 
-};
+export {
+  apiVersion,
+  baseLink,
+  githubURL,
+  wsUrl,
+  botGateway,
+  agent,
+  DEFAULT_INTENTS,
+  channel,
+  messages,
+  deleteMessage,
+  guild
+}
