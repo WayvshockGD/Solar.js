@@ -1,1 +1,1 @@
-require("./examples/embed");
+require("./examples/embed")
