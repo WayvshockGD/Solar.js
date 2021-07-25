@@ -5,12 +5,7 @@ let client = new Client({
     "token": token
 });
 
-client.on("messageEvent", (message) => {
-    if (message.content === ">status") {
-        client.status("hi", "idle");
-        message.channel.sendMessage("Set status to `Idle`");
-    }
-})
+client.on("messageEvent", (message) => {})
 
 client.startGateway();
 client.on("ready", () => client.logger.info("ready!"));

@@ -10,13 +10,11 @@ export interface IChannel {
 
 export class Channel extends Base {
     private data: IChannel;
-    client: Client;
 
     constructor(data: IChannel, client: Client) {
         super(client);
 
         this.data = data;
-        this.client = client;
     }
 
     get id() {

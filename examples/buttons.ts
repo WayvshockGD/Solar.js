@@ -34,7 +34,7 @@ client.on("messageEvent", (message) => {
 
 client.on("interactionButtonEvent", (interaction) => {
     if (interaction.data.custom_id === "B1") {
-        client.sendMessage(interaction.channel_id!, `<@${interaction.member?.user.id}> You clicked the button didn't you.`)
+        // Code here...
     }
 })
 

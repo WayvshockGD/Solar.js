@@ -1,5 +1,6 @@
 import { GatewayMessageCreateDispatchData, APIUser, Snowflake } from "discord-api-types";
 import Client from "../Client";
+import CommandHandler from "../framework/CommandHandler";
 import { MessageOptions } from "../types/Context";
 import Base from "./Base";
 import { Channel } from "./Channel";
@@ -34,6 +35,10 @@ export = class Message extends Base {
 
     get mentions() {
         return this.data.mentions;
+    }
+
+    public handleCommands() {
+        return new CommandHandler(this.client, this);
     }
 
     sendMessage(content: MessageOptions | string) {

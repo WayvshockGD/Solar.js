@@ -2,7 +2,7 @@ import { Method } from "got/dist/source";
 import { Identifiers } from "./Types";
 import { ISettingsParam } from "tslog";
 
-import type { APIMessageComponent, APIEmbedAuthor, APIEmbedFooter, APIMessageInteraction, GatewayDispatchEvents, APIMessageComponentGuildInteraction } from "discord-api-types";
+import type { APIMessageComponent, APIEmbedAuthor, APIEmbedFooter, APIMessageComponentGuildInteraction } from "discord-api-types";
 import Message from "../structures/Message";
 
 export interface activities {
@@ -20,6 +20,11 @@ export interface IOptions {
     ws?: {};
     shards?: {
         max?: number;
+    }
+    command?: {
+        prefix: string;
+        allow_bots?: boolean;
+        cache_usage?: boolean;
     }
     identify?: {
         properties?: {

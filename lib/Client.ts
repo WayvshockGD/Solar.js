@@ -51,6 +51,13 @@ export = class Client extends EventEmitter {
         })
     }
 
+    public editMessage(channelID: Snowflake, messageID: Snowflake, body: MessageOptions | string) {
+        this.requester.request(deleteMessage(channelID, messageID), {
+            auth: true,
+            method: "PATCH"
+        }, (typeof body === "string") ? { content: body } : body);
+    }
+
     async sendMessage(channel: string, content: MessageOptions | string): Promise<Message> {
         // @ts-ignore
         if (content.embeds && !content.embeds.length) {

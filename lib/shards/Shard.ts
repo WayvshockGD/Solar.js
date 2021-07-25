@@ -70,17 +70,7 @@ export = class Shard extends EventEmitter {
 
     public status(indentifier: Identifiers, game: string) {
         let isIdle = (this.clientStatus.status === "idle") ? Date.now() : 0;
-
-        console.log(JSON.stringify({
-            op: 3,
-            d: {
-                afk: !!this.clientStatus.afk,
-                game: game,
-                since: isIdle,
-                status: indentifier
-            }
-        }))
-
+        
         this.ws.send(JSON.stringify({
             op: 3,
             d: {
