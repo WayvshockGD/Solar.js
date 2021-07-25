@@ -1,12 +1,11 @@
 import { token } from "../config.test.json";
 import Client from "../lib/Client";
-import Message from "../lib/structures/Message";
 
 let client = new Client({
     "token": token,
 });
 
-client.on("messageEvent", (message: Message) => {
+client.on("messageEvent", (message) => {
     if (message.content === ">message") {
         message.sendMessage("Hi this is from the message structure :D");
     } else if (message.content === ">channel") {

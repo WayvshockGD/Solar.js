@@ -49,7 +49,7 @@ export = class Shard extends EventEmitter {
         // @ts-ignore
         if (this._client.options.shards?.max > 1) {
             // @ts-ignore
-            indent["shard"] = [this.id, this._client.options.shards?.max]
+            indent!["shard"] = [this.id, this._client.options.shards?.max]
         }
 
         this.ws.send(JSON.stringify({ ...indent }));

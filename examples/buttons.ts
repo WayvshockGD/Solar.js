@@ -1,6 +1,5 @@
 import Client from "../lib/Client";
 import { token } from "../config.test.json";
-import Message from "../lib/structures/Message";
 
 let client = new Client({
      "token": token,
@@ -17,7 +16,7 @@ let client = new Client({
      }
 });
 
-client.on("messageEvent", (message: Message) => {
+client.on("messageEvent", (message) => {
     if (message.content === ">buttons") {
         message.channel.sendMessage({
            content: "Hi here are some buttons",
@@ -43,6 +42,13 @@ client.on("messageEvent", (message: Message) => {
         })
     }
 })
+
+client.on("interactionButtonEvent", (interaction) => {
+    if (interaction.data.custom_id === "B1") {
+        client.sendMessage(interaction.channel_id!, `<@${interaction.member?.user.id}> You clicked the button didn't you.`)
+    }
+})
+
 
 client.startGateway();
 client.on("ready", () => { console.log("Ready!"); });

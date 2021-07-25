@@ -13,7 +13,7 @@ export class Channel extends Base {
     client: Client;
 
     constructor(data: IChannel, client: Client) {
-        super();
+        super(client);
 
         this.data = data;
         this.client = client;

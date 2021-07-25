@@ -2,7 +2,8 @@ import { Method } from "got/dist/source";
 import { Identifiers } from "./Types";
 import { ISettingsParam } from "tslog";
 
-import type { APIMessageComponent, APIEmbedAuthor, APIEmbedFooter } from "discord-api-types";
+import type { APIMessageComponent, APIEmbedAuthor, APIEmbedFooter, APIMessageInteraction, GatewayDispatchEvents, APIMessageComponentGuildInteraction } from "discord-api-types";
+import Message from "../structures/Message";
 
 export interface activities {
     name: string;
@@ -59,5 +60,8 @@ export interface IRestOptions {
 
 
 export interface events<T> {
-    (event: "ratelimit"): T;
+    (event: "ratelimit", listener: () => void): T;
+    (event: "messageEvent", listener: (message: Message) => void): T;
+    (event: "ready", listener: () => void): T;
+    (event: "interactionButtonEvent", listener: (interaction: APIMessageComponentGuildInteraction) => void): T;
 }

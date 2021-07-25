@@ -3,7 +3,7 @@ import { apiVersion, botGateway, DEFAULT_INTENTS, deleteMessage, messages, wsUrl
 import ShardManager from "./managers/ShardManager";
 import Requester from "./rest/Requester";
 import Erlpack from "erlpack";
-import { IOptions, MessageOptions } from "./types/Context";
+import { events, IOptions, MessageOptions } from "./types/Context";
 
 import type { 
     APIGuild, 
@@ -24,6 +24,8 @@ export = class Client extends EventEmitter {
     guilds: Map<Snowflake | undefined, APIGuild | undefined>;
     members: Map<string | undefined, APIGuildMember>;
     rest: RestClient;
+
+    on: events<this> = this.on;
 
     public url: string = "";
     constructor(options: IOptions) {

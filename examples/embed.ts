@@ -6,7 +6,7 @@ let client = new Client({
      "token": token
 });
 
-client.on("messageEvent", (message: Message) => {
+client.on("messageEvent", (message) => {
     if (message.content === ">embed") {
         message.channel.sendMessage({
             embeds: [

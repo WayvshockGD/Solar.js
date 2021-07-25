@@ -1,8 +1,9 @@
-import { GatewayMessageCreateDispatchData, APIUser } from "discord-api-types";
+import { GatewayMessageCreateDispatchData, APIUser, Snowflake } from "discord-api-types";
 import Client from "../Client";
 import { MessageOptions } from "../types/Context";
 import Base from "./Base";
 import { Channel } from "./Channel";
+import Guild from "./Guild";
 
 export = class Message extends Base {
     client: Client;
@@ -12,14 +13,17 @@ export = class Message extends Base {
     author: APIUser;
     
     channel: Channel;
+    guild: Guild;
     constructor(data: GatewayMessageCreateDispatchData, client: Client) {
-        super();
+        super(client);
 
         this.client = client;
         this.data = data;
 
         this.author = data.author;
         this.id = data.id;
+
+        this.guild = new Guild(client.guilds.get(data.guild_id), client);
 
         this.channel = new Channel({ id: data.channel_id, message: this }, client);
     }

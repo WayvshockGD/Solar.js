@@ -106,6 +106,9 @@ export = class WebSocketHandler<D> {
                             
                             client.members.set(member.user?.id, member);
                         }
+                        break;
+                    case "INTERACTION_CREATE":
+                        client.emit("interactionButtonEvent", packet.d);
                     default:
                         break;
                 }

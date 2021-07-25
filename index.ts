@@ -1,1 +1,1 @@
-require("./examples/buttons");
+require("./examples/buttons")
