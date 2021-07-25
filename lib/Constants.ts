@@ -10,9 +10,9 @@ let wsUrl = "wss://gateway.discord.gg"
 
 let botGateway = `${baseLink}/gateway/bot`
 
-let agent = `Solarjs (${githubURL} ${pkg.version})`
+let agent = `Solarjs (${githubURL}, ${pkg.version})`
 
-let DEFAULT_INTENTS = 770
+let DEFAULT_INTENTS = 4867;
 
 
 let channel = (channelID: string) => `${baseLink}/channels/${channelID}`
