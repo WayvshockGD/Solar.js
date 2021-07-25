@@ -1,1 +1,1 @@
-require("./examples/buttons")
+export {default as Client} from "./lib/Client";

@@ -15,6 +15,7 @@ import type {
 import { Logger } from "tslog";
 import Message from "./structures/Message";
 import RestClient from "./rest/RestClient";
+import { Identifiers } from "./types/Types";
 
 export = class Client extends EventEmitter {
     options: IOptions;
@@ -42,6 +43,12 @@ export = class Client extends EventEmitter {
         if (!options.intents) {
             options.intents = DEFAULT_INTENTS;
         }
+    }
+
+    public status(game: string, status: Identifiers) {
+        this.shards.forEach(shard => {
+            shard.status(status, game);
+        })
     }
 
     async sendMessage(channel: string, content: MessageOptions | string): Promise<Message> {

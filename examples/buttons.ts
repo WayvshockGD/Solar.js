@@ -3,17 +3,6 @@ import { token } from "../config.test.json";
 
 let client = new Client({
      "token": token,
-     "identify": {
-         "presence": {
-             "activities": [
-                {
-                    name: "hi",
-                    type: 0
-                }
-            ],
-             "status": "idle"
-         }
-     }
 });
 
 client.on("messageEvent", (message) => {
@@ -51,4 +40,6 @@ client.on("interactionButtonEvent", (interaction) => {
 
 
 client.startGateway();
-client.on("ready", () => { console.log("Ready!"); });
+client.on("ready", () => {
+     console.log("Ready!");
+});

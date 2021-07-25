@@ -1,14 +1,21 @@
 import { GatewayDispatchPayload } from "discord-api-types";
 import EventEmitter from "events";
-import { Identifier } from "typescript";
 import WebSocket, { Data } from "ws";
 import Client from "../Client";
 import WebSocketHandler from "../rest/handlers/WebsocketHandler";
+import { Identifiers } from "../types/Types";
 
 export = class Shard extends EventEmitter {
     _client: Client;
     ws: WebSocket;
     id: number;
+
+    clientStatus: {
+        afk: boolean;
+        game: string;
+        status: Identifiers;
+    }
+
     webSocketHandler: <D>(data?: D) => WebSocketHandler<D>;
     constructor(id: number, _client: Client) {
         super();
@@ -19,6 +26,12 @@ export = class Shard extends EventEmitter {
             ..._client.options.ws
         });
         this.webSocketHandler = <D>(data?: D) => new WebSocketHandler(this.ws, data);
+
+        this.clientStatus = {
+            afk: false,
+            game: "",
+            status: "online"
+        }
 
         this.startWsEvents();
     }
@@ -49,18 +62,34 @@ export = class Shard extends EventEmitter {
         // @ts-ignore
         if (this._client.options.shards?.max > 1) {
             // @ts-ignore
-            indent!["shard"] = [this.id, this._client.options.shards?.max]
+            indent["shard"] = [this.id, this._client.options.shards?.max]
         }
 
         this.ws.send(JSON.stringify({ ...indent }));
     }
 
-    public status(indentifier: Identifier, game: string) {
-        this._client.guilds.forEach((guild) => {
-            if (guild) {
-                
+    public status(indentifier: Identifiers, game: string) {
+        let isIdle = (this.clientStatus.status === "idle") ? Date.now() : 0;
+
+        console.log(JSON.stringify({
+            op: 3,
+            d: {
+                afk: !!this.clientStatus.afk,
+                game: game,
+                since: isIdle,
+                status: indentifier
             }
-        })
+        }))
+
+        this.ws.send(JSON.stringify({
+            op: 3,
+            d: {
+                afk: this.clientStatus.afk,
+                game: game,
+                since: isIdle,
+                status: indentifier
+            }
+        }));
     }
 
     startWsEvents() {
