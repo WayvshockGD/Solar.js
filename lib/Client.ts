@@ -25,6 +25,7 @@ export = class Client extends EventEmitter {
     guilds: Map<Snowflake | undefined, APIGuild | undefined>;
     members: Map<string | undefined, APIGuildMember>;
     rest: RestClient;
+    ratelimits: string[];
 
     on: events<this> = this.on;
 
@@ -39,6 +40,7 @@ export = class Client extends EventEmitter {
         this.guilds = new Map();
         this.members = new Map();
         this.logger = new Logger(options.logger?.loggerOptions);
+        this.ratelimits = [];
 
         if (!options.intents) {
             options.intents = DEFAULT_INTENTS;

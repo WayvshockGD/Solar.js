@@ -1,4 +1,4 @@
-import Client from "../lib/Client";
+import { Client } from "../index";
 import { token } from "../config.test.json";
 
 let client = new Client({
